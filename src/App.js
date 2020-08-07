@@ -2,7 +2,6 @@ import React from "react";
 import { Route } from "react-router-dom";
 
 import data from "./data/data.json";
-import "./App.css";
 import Home from "./components/Home";
 import VideoPage from "./components/VideoPage";
 
@@ -12,12 +11,12 @@ export default () => {
       <Route
         exact={true}
         path={`/`}
-        render={() => <Home data={data} page={1} />}
+        render={() => <Home data={data} currentPage={1} />}
       />
       <Route
         path={`/page/:page`}
         render={({ match }) => (
-          <Home data={data} page={parseInt(match.params.page)} />
+          <Home data={data} currentPage={parseInt(match.params.page)} />
         )}
       />
       <Route

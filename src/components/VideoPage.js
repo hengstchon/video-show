@@ -1,14 +1,14 @@
 import React from "react";
+import { Container, Typography } from "@material-ui/core";
 import QierPlayer from "qier-player";
 
 export default ({ info }) => {
   const { title, video_src } = info;
   return (
-    <div>
-      <div>Title: {title}</div>
-      <div>{video_src}</div>
+    <Container maxWidth="lg" style={{ height: `100vh` }}>
+      <Typography style={{ marginTop: "20px" }}>{title}</Typography>
       <br />
-      <QierPlayer width={`100%`} height={`800px`} srcOrigin={video_src} />
-    </div>
+      <QierPlayer width={`100%`} height={`80%`} srcOrigin={video_src} />
+    </Container>
   );
 };
