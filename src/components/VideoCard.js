@@ -18,51 +18,47 @@ const useStyles = makeStyles({
   time: {
     fontSize: 12,
     position: `absolute`,
-    marginTop: -25,
-    marginLeft: 234,
+    marginTop: -23,
+    marginLeft: 230,
     paddingLeft: 2,
     paddingRight: 2,
+    borderRadius: 2,
     color: `#ddd`,
-    backgroundColor: `#333`,
-    border: `1px solid #333`,
-    borderRadius: 3
-  },
-  content: {
-    paddingTop: 8
+    backgroundColor: `#333`
   },
   title: {
-    whiteSpace: `nowrap`,
-    overflow: `hidden`,
-    textOverflow: `ellipsis`,
     "&:hover, &:focus": {
       whiteSpace: `normal`
     }
-  },
-  info: {
-    color: `#666`
   }
 });
 
 export default ({ info }) => {
-  const { title, add_time, views, favorites, duration, img_src } = info;
+  const { id, title, add_time, views, favorites, duration, img_src } = info;
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <Link to={`/video/${title}`}>
-        <CardMedia
-          className={classes.media}
-          image={img_src}
-          title="Paella dish"
-        />
+      <Link to={`/video/${id}`}>
+        <CardMedia className={classes.media} image={img_src} title={title} />
         <Typography className={classes.time}>{duration}</Typography>
       </Link>
 
-      <CardContent className={classes.content}>
-        <Typography gutterBottom variant="body2" className={classes.title}>
+      <CardContent style={{ paddingTop: 8 }}>
+        <Typography
+          gutterBottom
+          noWrap
+          variant="body2"
+          className={classes.title}
+          color="textPrimary"
+        >
           {title}
         </Typography>
-        <Typography variant="caption" className={classes.info}>
+        <Typography
+          variant="caption"
+          className={classes.info}
+          color="textSecondary"
+        >
           <div>添加时间: {add_time}</div>
           <div>查看: {views}</div>
           <div>收藏: {favorites}</div>

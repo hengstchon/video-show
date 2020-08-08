@@ -20,9 +20,11 @@ export default () => {
         )}
       />
       <Route
-        path={`/video/:title`}
+        path={`/video/:id`}
         render={({ match }) => (
-          <VideoPage info={data.find(d => d.title === match.params.title)} />
+          <VideoPage
+            info={data.find(d => d.id === parseInt(match.params.id))}
+          />
         )}
       />
     </div>

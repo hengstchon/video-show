@@ -19,10 +19,10 @@ export default ({ data, currentPage }) => {
         <h3>共 {data.length} 部</h3>
       </Grid>
 
-      <Grid container justify="center" spacing={3}>
+      <Grid container justify="space-evenly" spacing={3}>
         {currentVideos.map(info => (
-          <Grid item>
-            <VideoCard key={info.title} info={info} />
+          <Grid item key={info.id}>
+            <VideoCard info={info} />
           </Grid>
         ))}
       </Grid>
