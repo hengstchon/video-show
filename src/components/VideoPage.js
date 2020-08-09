@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Typography } from "@material-ui/core";
 import QierPlayer from "qier-player";
+import { getSrc } from "../utils";
 
 export default ({ info }) => {
-  const { title, video_src } = info;
+  const { title, v_href } = info;
+  const [src, setSrc] = useState("");
+
+  useEffect(() => {
+    getSrc(v_href).then(src => {
+      setSrc(src);
+    });
+  }, [v_href]);
+
   return (
     <Container maxWidth="lg" style={{ height: `100vh` }}>
       <Typography style={{ marginTop: "20px" }}>{title}</Typography>
       <br />
-      <QierPlayer width={`100%`} height={`80%`} srcOrigin={video_src} />
+      {src && <QierPlayer width={`100%`} height={`80%`} srcOrigin={src} />}
     </Container>
   );
 };
