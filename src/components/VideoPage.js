@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Typography } from "@material-ui/core";
+import { Container, Typography, Button, Grid } from "@material-ui/core";
 import QierPlayer from "qier-player";
 import { getSrc } from "../utils";
 
@@ -18,6 +18,14 @@ export default ({ info }) => {
       <Typography style={{ marginTop: "20px" }}>{title}</Typography>
       <br />
       {src && <QierPlayer width={`100%`} height={`80%`} srcOrigin={src} />}
+      <br />
+      <Grid container justify="flex-end">
+        <a href={src} download style={{ textDecoration: "none" }}>
+          <Button variant="contained" color="primary" component="span">
+            Download
+          </Button>
+        </a>
+      </Grid>
     </Container>
   );
 };
