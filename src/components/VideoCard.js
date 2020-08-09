@@ -1,8 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Card from "@material-ui/core/Card";
+import { Link, useParams } from "react-router-dom";
+import { Card, CardMedia, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { CardMedia, CardContent, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
@@ -16,7 +15,6 @@ const useStyles = makeStyles({
     backgroundColor: `black`
   },
   time: {
-    fontSize: 12,
     position: `absolute`,
     marginTop: -23,
     marginLeft: 230,
@@ -34,32 +32,34 @@ const useStyles = makeStyles({
 });
 
 export default ({ info }) => {
-  const { id, title, add_time, views, favorites, duration, img_src } = info;
+  const { id, title, addTime, views, favorites, duration, imgsrc } = info;
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <Link to={`/video/${id}`}>
-        <CardMedia className={classes.media} image={img_src} title={title} />
-        <Typography className={classes.time}>{duration}</Typography>
+      <Link to={`/page/${useParams().page}/video/${id}`}>
+        <CardMedia className={classes.media} image={imgsrc} title={title} />
+        <Typography className={classes.time} variant="caption">
+          {duration}
+        </Typography>
       </Link>
 
       <CardContent style={{ paddingTop: 8 }}>
         <Typography
-          gutterBottom
           noWrap
+          gutterBottom
           variant="body2"
-          className={classes.title}
           color="textPrimary"
+          className={classes.title}
         >
           {title}
         </Typography>
         <Typography
           variant="caption"
-          className={classes.info}
           color="textSecondary"
+          className={classes.info}
         >
-          <div>添加时间: {add_time}</div>
+          <div>添加时间: {addTime}</div>
           <div>查看: {views}</div>
           <div>收藏: {favorites}</div>
         </Typography>

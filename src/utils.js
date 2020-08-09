@@ -1,13 +1,16 @@
 import axios from "axios";
+import JSSoup from "jssoup";
+
+export const log = console.log;
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 
 const ipInt = () => Math.floor(Math.random() * 255 + 1);
-
-const headers = {
+const getHeaders = () => ({
   "Accept-Language": "zh-CN,zh;q=0.9",
   "X-Forwarded-For": `${ipInt()}.${ipInt()}.${ipInt()}.${ipInt()}`
-};
+});
 
-function strencode(input, key) {
+const strencode = (input, key) => {
   input = atob(input);
   let code = "";
   for (let i = 0; i < input.length; i++) {
@@ -15,12 +18,76 @@ function strencode(input, key) {
     code += String.fromCharCode(input.charCodeAt(i) ^ key.charCodeAt(k));
   }
   return atob(code);
-}
+};
 
-export const getSrc = async url => {
-  url = url.replace("http://91porn.com", "");
+const getInfo = soup => {
+  let t = soup
+    .getText("|")
+    .replace(/&nbsp;/gi, " ")
+    .split("|");
+  if (t.length > 14) t = t.slice(1);
+
+  const duration = t[0].trim();
+  const title = t[1].trim();
+  const addTime = t[3].trim();
+  const author = t[5].trim();
+  const views = t[7].trim();
+  const favorites = t[9].trim();
+  const comments = t[11].trim();
+  const points = t[13].trim();
+  const imgsrc = soup.find("img").attrs.src;
+  const vhref = soup.find("a").attrs.href;
+
+  return {
+    title,
+    addTime,
+    author,
+    views,
+    favorites,
+    comments,
+    points,
+    duration,
+    imgsrc,
+    vhref
+  };
+};
+
+const getHtml = async url => {
+  url = CORS_PROXY + url;
+  const headers = getHeaders();
+  log(headers);
   const response = await axios.get(url, { headers });
-  const html = response.data;
+  return response.data;
+};
+
+// in video index page
+export const getInfos = async url => {
+  const html = await getHtml(url);
+  localStorage.setItem("pageHtml", JSON.stringify(html));
+  const soup = new JSSoup(html);
+  const listchannel = soup.findAll("div", "videos-text-align");
+  let infos = listchannel.map(i => getInfo(i));
+  infos = infos.map((info, i) => ({ id: i + 1, ...info }));
+  return infos;
+};
+
+// in video index page
+export const getTotalPage = async url => {
+  const html =
+    JSON.parse(localStorage.getItem("pageHtml")) || (await getHtml(url));
+  const soup = new JSSoup(html);
+  const pages = soup
+    .find("div", "pagingnav")
+    .findAll("a")
+    .map(i => i.text);
+  const l = pages.length;
+  if (pages[l - 1] === "&raquo;") return parseInt(pages[l - 2]);
+  return parseInt(pages[l - 1]);
+};
+
+// in every video detail page
+export const getSrc = async url => {
+  const html = await getHtml(url);
   const args = /strencode\("(.*?)","(.*?)",/.exec(html);
   const decodedStr = strencode(args[1], args[2]);
   const src = /src='(.*?)'/.exec(decodedStr)[1];

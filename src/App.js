@@ -1,32 +1,19 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
-import data from "./data/data.json";
 import Home from "./components/Home";
 import VideoPage from "./components/VideoPage";
+import NotFound from "./components/NotFound";
 
 export default () => {
   return (
-    <div className="wrapper">
-      <Route
-        exact={true}
-        path={`/`}
-        render={() => <Home data={data} currentPage={1} />}
-      />
-      <Route
-        path={`/page/:page`}
-        render={({ match }) => (
-          <Home data={data} currentPage={parseInt(match.params.page)} />
-        )}
-      />
-      <Route
-        path={`/video/:id`}
-        render={({ match }) => (
-          <VideoPage
-            info={data.find(d => d.id === parseInt(match.params.id))}
-          />
-        )}
-      />
-    </div>
+    <Switch>
+      <Route exact path={`/`}>
+        <Redirect to="/page/1" />
+      </Route>
+      <Route path={`/page/:page/video/:id`} component={VideoPage} />
+      <Route path={`/page/:page`} component={Home} />
+      <Route component={NotFound} />
+    </Switch>
   );
 };
