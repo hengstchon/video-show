@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardMedia, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { getSrc } from "../utils";
 
 const useStyles = makeStyles({
   root: {
@@ -32,12 +33,16 @@ const useStyles = makeStyles({
 });
 
 export default ({ cat, page, info }) => {
-  const { id, title, addTime, views, favorites, duration, imgsrc } = info;
+  const { title, addTime, views, favorites, duration, imgsrc, vhref } = info;
   const classes = useStyles();
+
+  const handleClick = () => {
+    getSrc(vhref).then(src => window.open(src));
+  };
 
   return (
     <Card className={classes.root}>
-      <Link to={`/${cat}?page=${page}&id=${id}&watching=true`}>
+      <Link to="#" onClick={handleClick}>
         <CardMedia className={classes.media} image={imgsrc} title={title} />
         <Typography className={classes.time} variant="caption">
           {duration}

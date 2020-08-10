@@ -4,7 +4,6 @@ import { Paper, Grid } from "@material-ui/core";
 
 import Pagination from "./Pagination";
 import VideoCard from "./VideoCard";
-import VideoPage from "./VideoPage";
 import { getInfos, getTotalPage } from "../utils";
 
 export default () => {
@@ -12,7 +11,6 @@ export default () => {
   const cat = loc.pathname.slice(1) || "hot";
   const query = new URLSearchParams(loc.search);
   const page = query.get("page") || "1";
-  const watching = query.get("watching");
   let url = `http://91porn.com/v.php?category=${cat}&viewtype=basic&page=${page}`;
 
   const [videoInfos, setVideoInfos] = useState([]);
@@ -28,9 +26,7 @@ export default () => {
     window.scrollTo(0, 0);
   }, [url]);
 
-  return watching ? (
-    <VideoPage />
-  ) : (
+  return (
     <>
       <Paper variant="outlined" style={{ padding: `1em 0` }}>
         <Grid container justify="center" spacing={3}>
