@@ -42,7 +42,7 @@ export default ({ cat, page, info }) => {
 
   return (
     <Card className={classes.root}>
-      <Link to="#" onClick={handleClick}>
+      <Link to={l => l} onClick={handleClick}>
         <CardMedia className={classes.media} image={imgsrc} title={title} />
         <Typography className={classes.time} variant="caption">
           {duration}
