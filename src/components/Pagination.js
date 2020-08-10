@@ -6,12 +6,12 @@ import { Pagination, PaginationItem } from "@material-ui/lab";
 
 const useStyles = makeStyles({
   root: {
-    marginTop: 20,
-    marginBottom: 30
+    marginTop: "1rem",
+    marginBottom: "2rem"
   }
 });
 
-export default ({ currentPage, totalPage }) => {
+export default ({ currentPage, totalPage, cat }) => {
   const classes = useStyles();
   return (
     <Grid container justify="center" className={classes.root}>
@@ -21,7 +21,7 @@ export default ({ currentPage, totalPage }) => {
         renderItem={item => (
           <PaginationItem
             component={Link}
-            to={`/page/${item.page}`}
+            to={`/${cat}?page=${item.page}`}
             {...item}
           />
         )}

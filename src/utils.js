@@ -55,7 +55,6 @@ const getInfo = soup => {
 const getHtml = async url => {
   url = CORS_PROXY + url;
   const headers = getHeaders();
-  log(headers);
   const response = await axios.get(url, { headers });
   return response.data;
 };
@@ -71,18 +70,15 @@ export const getInfos = async url => {
   return infos;
 };
 
-// in video index page
-export const getTotalPage = async url => {
-  const html =
-    JSON.parse(localStorage.getItem("pageHtml")) || (await getHtml(url));
+// get total page of videos from like "当前最热 视频 1 - 24 的 60"
+export const getTotalPage = () => {
+  const html = JSON.parse(localStorage.getItem("pageHtml"));
   const soup = new JSSoup(html);
-  const pages = soup
-    .find("div", "pagingnav")
-    .findAll("a")
-    .map(i => i.text);
-  const l = pages.length;
-  if (pages[l - 1] === "&raquo;") return parseInt(pages[l - 2]);
-  return parseInt(pages[l - 1]);
+  const t = soup.find("div", "login_register_header").text.split(" ");
+  const l = t.length;
+  const videoNum = parseInt(t[l - 1]);
+  const totalPage = Math.ceil(videoNum / 24);
+  return totalPage;
 };
 
 // in every video detail page

@@ -5,9 +5,13 @@ A simple video show.
 ```
 - App
   - Home
-    - VideoCard
-    - Pagination
-  - VideoPage
+    - Navigation
+    - Content
+      - VideoCard
+      - Pagination
+
+      - VideoPage
+
   - NotFound
 ```
 

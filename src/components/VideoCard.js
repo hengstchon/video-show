@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Card, CardMedia, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -31,13 +31,13 @@ const useStyles = makeStyles({
   }
 });
 
-export default ({ info }) => {
+export default ({ cat, page, info }) => {
   const { id, title, addTime, views, favorites, duration, imgsrc } = info;
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <Link to={`/page/${useParams().page}/video/${id}`}>
+      <Link to={`/${cat}?page=${page}&id=${id}&watching=true`}>
         <CardMedia className={classes.media} image={imgsrc} title={title} />
         <Typography className={classes.time} variant="caption">
           {duration}
