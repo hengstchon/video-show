@@ -25,7 +25,8 @@ export default () => {
       setTotalPage(getTotalPage());
       setVideoInfos(d);
     });
-  }, [cat, page]);
+    window.scrollTo(0, 0);
+  }, [url]);
 
   return watching ? (
     <VideoPage />
