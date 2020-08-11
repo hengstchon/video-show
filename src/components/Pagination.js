@@ -18,6 +18,7 @@ export default ({ currentPage, totalPage, cat }) => {
       <Pagination
         count={totalPage}
         page={currentPage}
+        color="primary"
         renderItem={item => (
           <PaginationItem
             component={Link}
