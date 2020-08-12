@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Paper, Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Pagination from "./Pagination";
 import VideoCard from "./VideoCard";
 import { getInfos, getTotalPage } from "../utils";
+
+const useStyles = makeStyles(theme => ({
+  toolbar: theme.mixins.toolbar
+}));
 
 export default () => {
   const loc = useLocation();
@@ -15,6 +20,8 @@ export default () => {
 
   const [videoInfos, setVideoInfos] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
+
+  const classes = useStyles();
 
   useEffect(() => {
     // get all video infos in a page
@@ -29,6 +36,7 @@ export default () => {
   return (
     <>
       <Paper variant="outlined" style={{ padding: `1em 0` }}>
+        <div className={classes.toolbar} />
         <Grid container justify="center" spacing={3}>
           {videoInfos.map(info => (
             <Grid item key={info.id}>
