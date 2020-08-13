@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Paper, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import ReactGA from "react-ga";
 
 import Pagination from "./Pagination";
 import VideoCard from "./VideoCard";
@@ -32,6 +33,10 @@ export default () => {
     });
     window.scrollTo(0, 0);
   }, [url]);
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.href);
+  }, [cat, page]);
 
   return (
     <>
