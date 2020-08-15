@@ -27,7 +27,6 @@ export default () => {
   useEffect(() => {
     // get all video infos in a page
     getInfos(url).then(d => {
-      localStorage.setItem("videoInfos", JSON.stringify(d));
       setTotalPage(getTotalPage());
       setVideoInfos(d);
     });
