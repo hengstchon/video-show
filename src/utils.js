@@ -2,7 +2,7 @@ import axios from "axios";
 import JSSoup from "jssoup";
 
 export const log = console.log;
-const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+const CORS_PROXY = "https://evening-ridge-14001.herokuapp.com/";
 
 const ipInt = () => Math.floor(Math.random() * 255 + 1);
 const getHeaders = () => ({
