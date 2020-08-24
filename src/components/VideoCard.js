@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from "react";
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Link
-} from "@material-ui/core";
+import React from "react";
+import { Link } from "react-router-dom";
+import { Card, CardMedia, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { getSrc } from "../utils";
 
@@ -35,31 +30,18 @@ export default ({ cat, page, info }) => {
   const { title, addTime, views, favorites, duration, imgsrc, vhref } = info;
   const classes = useStyles();
 
-  const [videoSrc, setVideoSrc] = useState("");
-  useEffect(() => {
-    getSrc(vhref).then(src => {
-      setVideoSrc(src);
-    });
-  }, [vhref]);
-
-  const media = (
-    <>
-      <CardMedia className={classes.media} image={imgsrc} />
-      <Typography className={classes.time} variant="caption">
-        {duration}
-      </Typography>
-    </>
-  );
+  const handleClick = () => {
+    getSrc(vhref).then(src => window.open(src));
+  };
 
   return (
     <Card className={classes.root}>
-      {videoSrc ? (
-        <Link href={videoSrc} target="_blank" rel="noopener">
-          {media}
-        </Link>
-      ) : (
-        <>{media}</>
-      )}
+      <Link to={l => l} onClick={handleClick}>
+        <CardMedia className={classes.media} image={imgsrc} />
+        <Typography className={classes.time} variant="caption">
+          {duration}
+        </Typography>
+      </Link>
 
       <CardContent style={{ paddingTop: 8 }}>
         <Typography
