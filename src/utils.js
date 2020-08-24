@@ -84,8 +84,8 @@ export const getTotalPage = () => {
 // in every video detail page
 export const getSrc = async url => {
   const html = await getHtml(url);
-  const args = /strencode\("(.*?)","(.*?)",/.exec(html);
-  const decodedStr = strencode(args[1], args[2]);
-  const src = /src='(.*?)'/.exec(decodedStr)[1];
+  // const args = /strencode\("(.*?)","(.*?)",/.exec(html);
+  // const decodedStr = strencode(args[1], args[2]);
+  const src = /<source src="(.*?)"/.exec(html)[1];
   return src;
 };
