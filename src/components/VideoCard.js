@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react"
 import {
   Card,
   CardMedia,
   CardContent,
   Typography,
   Link
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { getSrc } from "../utils";
+} from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
+import { getSrc } from "../utils"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,7 +17,10 @@ const useStyles = makeStyles(theme => ({
   media: {
     height: 140,
     backgroundSize: "contain",
-    backgroundColor: "black"
+    backgroundColor: "black",
+    "&:hover": {
+      cursor: "pointer"
+    }
   },
   time: {
     position: "absolute",
@@ -29,18 +32,16 @@ const useStyles = makeStyles(theme => ({
     color: "#ddd",
     backgroundColor: "#333"
   }
-}));
+}))
 
 export default ({ cat, page, info }) => {
-  const { title, addTime, views, favorites, duration, imgsrc, vhref } = info;
-  const classes = useStyles();
+  const { title, addTime, views, favorites, duration, imgsrc, vhref } = info
+  const classes = useStyles()
+  console.log("info: ", info)
 
-  const [videoSrc, setVideoSrc] = useState("");
-  useEffect(() => {
-    getSrc(vhref).then(src => {
-      setVideoSrc(src);
-    });
-  }, [vhref]);
+  const handleClick = () => {
+    getSrc(vhref).then(src => window.open(src))
+  }
 
   const media = (
     <>
@@ -49,17 +50,13 @@ export default ({ cat, page, info }) => {
         {duration}
       </Typography>
     </>
-  );
+  )
 
   return (
     <Card className={classes.root}>
-      {videoSrc ? (
-        <Link href={videoSrc} target="_blank" rel="noopener">
-          {media}
-        </Link>
-      ) : (
-        <>{media}</>
-      )}
+      <Link to={l => l} onClick={handleClick}>
+        {media}
+      </Link>
 
       <CardContent style={{ paddingTop: 8 }}>
         <Typography
@@ -78,6 +75,5 @@ export default ({ cat, page, info }) => {
         </Typography>
       </CardContent>
     </Card>
-  );
-};
-
+  )
+}
