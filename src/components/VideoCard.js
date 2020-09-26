@@ -37,10 +37,12 @@ const useStyles = makeStyles(theme => ({
 export default ({ cat, page, info }) => {
   const { title, addTime, views, favorites, duration, imgsrc, vhref } = info
   const classes = useStyles()
-  console.log("info: ", info)
 
   const handleClick = () => {
-    getSrc(vhref).then(src => window.open(src))
+    getSrc(vhref).then(src => {
+      console.log("src: ", src)
+      window.open(src)
+    })
   }
 
   const media = (

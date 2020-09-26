@@ -1,21 +1,15 @@
 import axios from "axios"
 import JSSoup from "jssoup"
 
-export const log = console.log
 const CORS_PROXY = "https://evening-ridge-14001.herokuapp.com/"
 
-const ipInt = () => Math.floor(Math.random() * 255 + 1)
+// const ipInt = () => Math.floor(Math.random() * 255 + 1)
 const getHeaders = () => ({
   "Accept-Language": "zh-CN,zh;q=0.9"
   // "X-Forwarded-For": `${ipInt()}.${ipInt()}.${ipInt()}.${ipInt()}`
 })
 
-const getHeaders2 = () => ({
-  "Accept-Language": "zh-CN,zh;q=0.9",
-  "X-Forwarded-For": `${ipInt()}.${ipInt()}.${ipInt()}.${ipInt()}`
-})
-
-const strencode = (input, key) => {
+const strencode = (key, input) => {
   input = atob(input)
   let code = ""
   for (let i = 0; i < input.length; i++) {
@@ -86,24 +80,20 @@ export const getTotalPage = () => {
   return totalPage
 }
 
-const _getSrc1 = html => {
-  const args = /strencode\("(.*?)","(.*?)",/.exec(html)
-  console.log("args: ", args)
-  if (!args) return
-  const decodedStr = strencode(args[1], args[2])
-  const src = /<source src='(.*?)'/.exec(decodedStr)[1]
-  return src
-}
+const _getSrc = html => {
+  // const args = /strencode\("(.*?)","(.*?)",/.exec(html)
+  // if (!args) return
+  // const decodedStr = strencode(args[1], args[2])
+  // const src = /<source src='(.*?)'/.exec(decodedStr)[1]
+  // return src
 
-const _getSrc2 = html => {
   const src = /<source src="(.*?)"/.exec(html)[1]
-  console.log("src: ", src)
   return src || ""
 }
 
 // in every video detail page
 export const getSrc = async url => {
   const html = await getHtml(url)
-  const src = _getSrc2(html)
+  const src = _getSrc(html)
   return src
 }
