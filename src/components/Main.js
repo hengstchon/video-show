@@ -6,8 +6,8 @@ import Player from "./Player"
 export default () => (
   <main>
     <Switch>
-      <Route exact path="/" component={Home} />
       <Route path="/player/:vid" component={Player} />
+      <Route path="/" component={Home} />
     </Switch>
   </main>
 )
