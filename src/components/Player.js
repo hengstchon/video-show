@@ -24,7 +24,7 @@ export default () => {
       <h2>{title}</h2>
       <ReactHlsPlayer
         url={url}
-        autoplay={true}
+        autoplay={false}
         controls={true}
         className={classes.player}
       />

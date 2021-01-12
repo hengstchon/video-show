@@ -60,7 +60,8 @@ const getVid = imgsrc => {
 }
 
 export const getUrl = vid => {
-  const url = `https://ccn.91p52.com//m3u8/${vid}/${vid}.m3u8`
+  // const url = `https://ccn.91p52.com//m3u8/${vid}/${vid}.m3u8`
+  const url = `https://cdn.91p07.com//m3u8/${vid}/${vid}.m3u8`
   return CORS_PROXY + url
 }
 

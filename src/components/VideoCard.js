@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default ({ cat, page, info }) => {
-  const { title, addTime, views, favorites, duration, imgsrc, vid } = info
+  const { title, author, addTime, views, favorites, duration, imgsrc, vid } = info
   const classes = useStyles()
 
   const media = (
@@ -59,8 +59,8 @@ export default ({ cat, page, info }) => {
         </Typography>
         <Typography variant="caption">
           <div>添加时间: {addTime}</div>
-          <div>查看: {views}</div>
-          <div>收藏: {favorites}</div>
+          <div>作者: {author}</div>
+          <div>查看: {views}  收藏: {favorites}</div>
         </Typography>
       </CardContent>
     </Card>
