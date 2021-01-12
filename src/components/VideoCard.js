@@ -1,13 +1,7 @@
 import React from "react"
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Link
-} from "@material-ui/core"
+import { Card, CardMedia, CardContent, Typography } from "@material-ui/core"
+import { Link } from "react-router-dom"
 import { makeStyles } from "@material-ui/core/styles"
-import { getSrc } from "../utils"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,15 +29,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default ({ cat, page, info }) => {
-  const { title, addTime, views, favorites, duration, imgsrc, vhref } = info
+  const { title, addTime, views, favorites, duration, imgsrc, vid } = info
   const classes = useStyles()
-
-  const handleClick = () => {
-    getSrc(vhref).then(src => {
-      console.log("src: ", src)
-      window.open(src)
-    })
-  }
 
   const media = (
     <>
@@ -56,7 +43,7 @@ export default ({ cat, page, info }) => {
 
   return (
     <Card className={classes.root}>
-      <Link to={l => l} onClick={handleClick}>
+      <Link to={`/player/${vid}`} target="_blank">
         {media}
       </Link>
 

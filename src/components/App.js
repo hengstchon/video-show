@@ -5,7 +5,7 @@ import indigo from "@material-ui/core/colors/indigo";
 import orange from "@material-ui/core/colors/orange";
 
 import Navigation from "./Navigation";
-import Content from "./Content";
+import Main from "./Main";
 import ScrollTop from "./ScrollTop";
 
 export default () => {
@@ -52,7 +52,7 @@ export default () => {
           darkMode={darkMode}
           handleClickDarkMode={handleClickDarkMode}
         />
-        <Content />
+        <Main />
       </Container>
       <ScrollTop />
     </ThemeProvider>

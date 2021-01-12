@@ -9,7 +9,7 @@ const getHeaders = () => ({
   // "X-Forwarded-For": `${ipInt()}.${ipInt()}.${ipInt()}.${ipInt()}`
 })
 
-const strencode = (key, input) => {
+const strencode = (input, key) => {
   input = atob(input)
   let code = ""
   for (let i = 0; i < input.length; i++) {
@@ -36,6 +36,7 @@ const getInfo = soup => {
   const points = t[13].trim()
   const imgsrc = soup.find("img").attrs.src
   const vhref = soup.find("a").attrs.href
+  const vid = getVid(imgsrc)
 
   return {
     title,
@@ -47,8 +48,20 @@ const getInfo = soup => {
     points,
     duration,
     imgsrc,
-    vhref
+    vhref,
+    vid
   }
+}
+
+const getVid = imgsrc => {
+  const last = imgsrc.split("/").pop()
+  const vid = last.split(".")[0]
+  return parseInt(vid)
+}
+
+export const getUrl = vid => {
+  const url = `https://ccn.91p52.com//m3u8/${vid}/${vid}.m3u8`
+  return CORS_PROXY + url
 }
 
 const getHtml = async url => {
@@ -81,14 +94,16 @@ export const getTotalPage = () => {
 }
 
 const _getSrc = html => {
-  // const args = /strencode\("(.*?)","(.*?)",/.exec(html)
-  // if (!args) return
-  // const decodedStr = strencode(args[1], args[2])
-  // const src = /<source src='(.*?)'/.exec(decodedStr)[1]
-  // return src
-
-  const src = /<source src="(.*?)"/.exec(html)[1]
-  return src || ""
+  const args = /strencode\("(.*?)","(.*?)",/.exec(html)
+  if (args) {
+    const decodedStr = strencode(args[1], args[2])
+    const src = /<source src='(.*?)'/.exec(decodedStr)[1]
+    return src
+  } else {
+    let src = /<source src="(.*?)"/.exec(html)
+    src = src && src[1]
+    return src || "游客"
+  }
 }
 
 // in every video detail page
